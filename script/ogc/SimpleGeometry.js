@@ -1,32 +1,16 @@
 ﻿/*global define, require*/
 /*jslint white:true, regexp:true, plusplus:true */
 
-define(function () {
-	/**
-	 * @exports ogc/SimpleGeometry
-	*/
+define(/** @exports ogc/SimpleGeometry */ function () {
 	"use strict";
-	var coordsRe, pathRe, TYPE_POINT, TYPE_MULTIPOINT, TYPE_LINESTRING, TYPE_MULTILINESTRING, TYPE_POLYGON;
 
-	/** @constant {string}
-	@default
-*/
+	var coordsRe, pathRe, TYPE_POINT, TYPE_MULTIPOINT, TYPE_LINESTRING, TYPE_MULTILINESTRING, TYPE_POLYGON, SimpleGeometry;
+
+
 	TYPE_POINT = "POINT";
-	/** @constant {string}
-	    @default
-	*/
 	TYPE_MULTIPOINT = "MULTIPOINT";
-	/** @constant {string}
-	    @default
-	*/
 	TYPE_LINESTRING = "LINESTRING";
-	/** @constant {string}
-	    @default
-	*/
 	TYPE_MULTILINESTRING = "MULTILINESTRING";
-	/** @constant {string}
-	    @default
-	*/
 	TYPE_POLYGON = "POLYGON";
 
 	pathRe = /\([^()]+\)/g;
@@ -67,8 +51,9 @@ define(function () {
 
 	/**
 	 * Converts an array representing rings or paths (of a polygon or polyine) into OGC Simple Geometry string equivalent. 
-	 * @param {Number[][][]} An array containing arrays containing arrays of numbers. 
+	 * @param {Array} paths An array containing arrays containing arrays of numbers. (Number[][][])
 	 * @returns {String} The string equivalent of the input array.  Note that the geometry type (e.g., "POLYGON") will not be included in this string.
+	 * @private
 	 */
 	function ringsOrPathsToOgc(paths) {
 		var output = [], path, i, l, point, pi, pl, coord, ci, cl;
@@ -111,7 +96,7 @@ define(function () {
 		return output.join("");
 	}
 
-	function pointsToOgc(/* Number[][] */ points) {
+	function pointsToOgc(/* Array */ points) {
 		var output = ["("];
 		for (var i = 0, l = points.length; i < l; i += 1) {
 			output.push(points[i].join(" "));
@@ -120,11 +105,14 @@ define(function () {
 		return output.join("");
 	}
 
-	/**
+	/** Represents an OGC Simple Geometry.
 	@param {String} wkt
 	@param {Number} srid
+	@class
 	*/
-	function SimpleGeometry(wkt, srid) {
+	SimpleGeometry = function (wkt, srid) {
+		
+
 		var pointRe, multiPointRe, lineStringRe, multiLineStringRe, polygonRe, singleDepthRe, geometry, typeRe = /^\w+\b/, type;
 
 		if (typeof wkt === "string") {
@@ -180,13 +168,25 @@ define(function () {
 			}
 		}
 
-		/** @member {String} The type of geometry. */
+		/** 
+		@member {String} type 
+		@memberof SimpleGeometry
+		@instance 
+		*/
 		this.type = type;
-		/** @member {Array} */
+
+		/** @member {Array} geometry 
+		@memberof SimpleGeometry
+		@instance
+		*/
 		this.geometry = geometry;
-		/** @member {Number} */
+
+		/** @member {Number} srid
+		@memberof SimpleGeometry
+		@instance
+		*/
 		this.srid = srid || null;
-	}
+	};
 
 	/**
 	Returns the WKT representation of the SimpleGeometry.
@@ -205,7 +205,7 @@ define(function () {
 		} else {
 			throw new Error("geometry property is not defined.");
 		}
-		
+
 		return [this.type, wkt].join("");
 	};
 
@@ -225,25 +225,30 @@ define(function () {
 
 	// Add type constants.
 
-	/** @constant {string}
-	    @default
-	*/
+	/** @constant 
+	 * @type {String}
+	 * @default "POINT"
+	 */
 	SimpleGeometry.TYPE_POINT = TYPE_POINT;
-	/** @constant {string}
-	    @default
+	/** @constant 
+	* @type {String}
+	* @default "MULTIPOINT"
 	*/
 	SimpleGeometry.TYPE_MULTIPOINT = TYPE_MULTIPOINT;
-	/** @constant {string}
-	    @default
+	/** @constant 
+	* @type {String}
+	* @default "LINESTRING"
 	*/
 	SimpleGeometry.TYPE_LINESTRING = TYPE_LINESTRING;
-	/** @constant {string}
-	    @default
+	/** @constant 
+	* @type {String}
+	* @default "MULTILINESTRING"
 	*/
 	SimpleGeometry.TYPE_MULTILINESTRING = TYPE_MULTILINESTRING;
-	/** @constant {string}
-	    @default
-	*/
+	/** @constant 
+	 * @type {String}
+	 * @default "POLYGON"
+	 */
 	SimpleGeometry.TYPE_POLYGON = TYPE_POLYGON;
 
 	return SimpleGeometry;

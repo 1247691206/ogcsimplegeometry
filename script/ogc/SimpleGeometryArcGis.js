@@ -1,10 +1,10 @@
 /**
- * Defines the ogc.SimpleGeometry class.
+ * @file Defines the ogc.SimpleGeometry class.
  * Copyright (C) 2012 Washington State Department of Transportation.  Licensed under The MIT License (http://opensource.org/licenses/MIT).  
  *@author Jeff Jacobson 
  */
-/*global define,dojo,esri*/
-define(["ogc/SimpleGeometry", "esri/geometry"
+/*global define*/
+define(["./SimpleGeometry", "esri/geometry"
 	/** @exports ogc/SimpleGeometryArcGis */
 ], function (SimpleGeometry) {
 	"use strict";
@@ -97,6 +97,12 @@ define(["ogc/SimpleGeometry", "esri/geometry"
 		featuresToSql: featuresToSql
 	};
 
+	/**
+	 * Converts an ogc.SimpleGeometry into an esri.geometry.Geometry.
+	 * @returns {esri.geometry.Geometry}
+	 * @memberof ogc/SimpleGeometry~SimpleGeometry
+	 * @instance
+	*/
 	SimpleGeometry.prototype.toEsriGeometry = function () {
 		return ogcToEsriGeometry(this);
 	};
