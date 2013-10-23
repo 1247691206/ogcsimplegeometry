@@ -1,0 +1,8 @@
+﻿bin
+/obj
+*.csproj
+*.user
+*.suo
+/OgcSimpleGeometryJS.sln
+/bin/OgcSimpleGeometryJS.dll
+/bin/OgcSimpleGeometryJS.pdb
