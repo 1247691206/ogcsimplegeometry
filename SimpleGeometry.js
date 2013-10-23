@@ -24,6 +24,9 @@ define(/** @exports ogc/SimpleGeometry */ function () {
 
 
 
+		/**
+		 * @returns {Array.<Array.<number>>}
+		 */
 		function pathWktToArray( /** {string[]} */ pathWkt) {
 			var match, output = [];
 			match = coordsRe.exec(pathWkt);
@@ -55,7 +58,7 @@ define(/** @exports ogc/SimpleGeometry */ function () {
 
 	/**
 	 * Converts an array representing rings or paths (of a polygon or polyine) into OGC Simple Geometry string equivalent. 
-	 * @param {Array} paths An array containing arrays containing arrays of numbers. (Number[][][])
+	 * @param {Array.<Array.<Array<number>>>} paths An array containing arrays containing arrays of numbers.
 	 * @returns {String} The string equivalent of the input array.  Note that the geometry type (e.g., "POLYGON") will not be included in this string.
 	 * @private
 	 */
