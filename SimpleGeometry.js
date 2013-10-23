@@ -1,4 +1,4 @@
-﻿/*global define, require*/
+﻿/*global define*/
 /*jslint white:true, regexp:true, plusplus:true */
 
 define(/** @exports ogc/SimpleGeometry */ function () {
@@ -16,6 +16,9 @@ define(/** @exports ogc/SimpleGeometry */ function () {
 	pathRe = /\([^()]+\)/g;
 	coordsRe = /([\-\d+\.]+)\s+([\-\d+\.]+)/g;
 
+	/** Converts a WKT string into an array of numbers
+	 * @returns {(number[]|Array.<number>|Array.<Array.<number>>|Array.<Array.<Array.<number>>>)}
+	 */
 	function toArrays( /**{string}*/ wkt) {
 		var paths, points, output = [], i, l;
 
@@ -26,8 +29,9 @@ define(/** @exports ogc/SimpleGeometry */ function () {
 			match = coordsRe.exec(pathWkt);
 			while (match) {
 				output.push([
-				Number(match[1]),
-				Number(match[2])]);
+					Number(match[1]),
+					Number(match[2])
+				]);
 				match = coordsRe.exec(pathWkt);
 			}
 			return output;
@@ -111,18 +115,18 @@ define(/** @exports ogc/SimpleGeometry */ function () {
 	@class
 	*/
 	SimpleGeometry = function (wkt, srid) {
-		
 
-		var pointRe, multiPointRe, lineStringRe, multiLineStringRe, polygonRe, singleDepthRe, geometry, typeRe = /^\w+\b/, type;
+
+		var pointRe, singleDepthRe, geometry, typeRe = /^\w+\b/, type;
 
 		if (typeof wkt === "string") {
 
 			// define regexps.
 			pointRe = /^POINT\b/i;
-			multiPointRe = /^MULTIPOINT\b/i;
-			lineStringRe = /^LINESTRING\b/i;
-			multiLineStringRe = /^MULTILINESTRING\b/i;
-			polygonRe = /^POLYGON\b/i;
+			////multiPointRe = /^MULTIPOINT\b/i;
+			////lineStringRe = /^LINESTRING\b/i;
+			////multiLineStringRe = /^MULTILINESTRING\b/i;
+			////polygonRe = /^POLYGON\b/i;
 
 			// Get the type.  Force to uppercase.
 			type = wkt.match(typeRe)[0].toUpperCase();
