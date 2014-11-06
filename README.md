@@ -28,9 +28,6 @@ See the [test application](https://github.com/WSDOT-GIS/ogc-simple-geometry-test
 ## Sample ##
 The sample application can be viewed at http://wsdot-gis.github.io/ogc-simple-geometry-test/.
 
-## License ##
-Licensed under [The MIT License](http://opensource.org/licenses/MIT).
-
 ## Files ##
 
 ### `SimpleGeometry.js` ###
